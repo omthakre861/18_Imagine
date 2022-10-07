@@ -44,7 +44,7 @@ class _TripScheduleState extends State<TripSchedule> {
                   return InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Booking(),
+                        builder: (context) => Booking(boardingPoint: data["Boarding Points"],droppingPoint: data["Dropping Point"]),
                       ));
                     },
                     child: Card(
