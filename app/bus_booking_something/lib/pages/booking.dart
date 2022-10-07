@@ -1,3 +1,4 @@
+import 'package:bus_booking_something/pages/passenger_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -5,10 +6,17 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Booking extends StatefulWidget {
-  Booking({Key? key, required this.boardingPoint, required this.droppingPoint})
+  Booking(
+      {Key? key,
+      required this.boardingPoint,
+      required this.droppingPoint,
+      required this.fromLocation,
+      required this.toLocation})
       : super(key: key);
   List<dynamic> boardingPoint;
   List<dynamic> droppingPoint;
+  String fromLocation;
+  String toLocation;
 
   @override
   State<Booking> createState() => _BookingState();
@@ -24,17 +32,15 @@ class _BookingState extends State<Booking> {
     super.initState();
   }
 
+  String boardingPoint = "";
+  String departingPoint = "";
+  String totalFare = "";
+
   int seatcount = 0;
   double fare = 800;
   double totalprice = 0;
 
   int _activeCurrentStep = 0;
-
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController pass = TextEditingController();
-  TextEditingController address = TextEditingController();
-  TextEditingController pincode = TextEditingController();
 
   // Here we have created list of steps
   // that are required to complete the form
@@ -139,14 +145,21 @@ class _BookingState extends State<Booking> {
       shrinkWrap: true,
       itemCount: widget.boardingPoint.length,
       itemBuilder: (context, index) {
-        return Card(
-          child: Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.all(5.0),
-            height: 50,
-            child: Text(
-              widget.boardingPoint[index].toString(),
-              style: TextStyle(fontSize: 20),
+        return InkWell(
+          onTap: () {
+            boardingPoint = widget.boardingPoint[index];
+            _activeCurrentStep += 1;
+            setState(() {});
+          },
+          child: Card(
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.all(5.0),
+              height: 50,
+              child: Text(
+                widget.boardingPoint[index].toString(),
+                style: TextStyle(fontSize: 20),
+              ),
             ),
           ),
         );
@@ -159,15 +172,30 @@ class _BookingState extends State<Booking> {
       shrinkWrap: true,
       itemCount: widget.droppingPoint.length,
       itemBuilder: (context, index) {
-        return Card(
-          child: Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.all(5.0),
-              height: 50,
-              child: Text(
-                widget.droppingPoint[index].toString(),
-                style: TextStyle(fontSize: 20),
-              )),
+        return InkWell(
+          onTap: () {
+            departingPoint = widget.droppingPoint[index];
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PassengerDetails(
+                      fromLocation: widget.fromLocation,
+                      toLocation: widget.toLocation,
+                      boardingPoint: boardingPoint,
+                      departingPoint: departingPoint,
+                      totalFare: totalFare),
+                ));
+          },
+          child: Card(
+            child: Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.all(5.0),
+                height: 50,
+                child: Text(
+                  widget.droppingPoint[index].toString(),
+                  style: TextStyle(fontSize: 20),
+                )),
+          ),
         );
       },
     );
