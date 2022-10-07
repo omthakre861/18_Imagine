@@ -8,15 +8,16 @@ mapboxgl.accessToken = "pk.eyJ1Ijoib210aGFrcmUiLCJhIjoiY2w4eWxmamxwMGFjMzN2cWkxM
 const FullMap = () => {
 
 
-    const mapContainerRef = useRef(null);
+    const mapContainerRef = React.useRef(null);
     
-    let [lng, setLng] = React.useState(-87.65);
-    let [lat, setLat] = React.useState(41.84);
-    let [zoom, setZoom] = React.useState(10);
+    let [lng, setLng] = React.useState(72.81);
+    let [lat, setLat] = React.useState(19.44);
+    let [zoom, setZoom] = React.useState(13);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const map = new mapboxgl.Map({
             container: mapContainerRef.current,
+            style: 'mapbox://styles/mapbox/streets-v11',
             center: [lng, lat],
             zoom: zoom,
         })
@@ -28,15 +29,14 @@ const FullMap = () => {
             setZoom(map.getZoom().toFixed(2));
         })
 
+        
+
         return () => map.remove();
 
     },[])
   return (
-      <ReactMapGL {...viewport}
-    
-          
-          onViewPortChange={(newView) =>setViewport(newView)} />
-  )
+     <div className="map-container" ref={mapContainerRef}></div>
+    )
 }
 
 export default FullMap;

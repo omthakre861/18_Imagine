@@ -7,62 +7,18 @@ import Login from '../src/components/Login'
 import { initializeApp } from "firebase/app";
 
 import { useState,useEffect } from 'react'
-
-
-import {
-    updateProfile,
-    GoogleAuthProvider,
-    getAuth,
-    signInWithPopup,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
-    signOut,
-} from "firebase/auth";
-
-import {
-    getFirestore,
-    query,
-    getDocs,
-    collection,
-    where,
-    addDoc,
-} from "firebase/firestore";
+import { collection, addDoc } from 'firebase/firestore';
+import {  app, database,getTrips,getCurrentUser,logout } from '../pages/firebaseConfig';
 import FullMap from '../src/components/FullMap'
 
 
 export default function Home() {
 
-  
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBOizeqiuWCAOyxtT_8FC0ZqUnf8b2mm-k",
-    authDomain: "bus-booking-something.firebaseapp.com",
-    databaseURL: "https://bus-booking-something-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "bus-booking-something",
-    storageBucket: "bus-booking-something.appspot.com",
-    messagingSenderId: "958529699742",
-    appId: "1:958529699742:web:7b6bfac387fe6f1a5ee08f"
-  };
-
-const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  console.log(auth.currentUser)
-  const db = getFirestore(app);
-
-  const [isauth, setAuth]= useState(auth)
-  const logout = () => {
-    console.log(auth.currentUser)
-    signOut(auth);
-    setAuth(auth);
-};
-
-
-  
+  console.log(getTrips());
 
   return (<>
-    {/* <FullMap /> */}
-    {isauth.currentUser != null && <Login SetAuth={setAuth} />}
+    <FullMap />
+    {getCurrentUser() != null && <Login SetAuth={setAuth} />}
     <div className='nav-main-cont'>
           <ul className='nav-list'>
         <li className='nav-items' onClick={ logout } ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">

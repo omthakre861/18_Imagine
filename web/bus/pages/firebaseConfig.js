@@ -22,18 +22,29 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBOizeqiuWCAOyxtT_8FC0ZqUnf8b2mm-k",
-    authDomain: "bus-booking-something.firebaseapp.com",
-    databaseURL: "https://bus-booking-something-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "bus-booking-something",
-    storageBucket: "bus-booking-something.appspot.com",
-    messagingSenderId: "958529699742",
-    appId: "1:958529699742:web:7b6bfac387fe6f1a5ee08f"
-  };
+  apiKey: "AIzaSyBOizeqiuWCAOyxtT_8FC0ZqUnf8b2mm-k",
+  authDomain: "bus-booking-something.firebaseapp.com",
+  databaseURL: "https://bus-booking-something-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "bus-booking-something",
+  storageBucket: "bus-booking-something.appspot.com",
+  messagingSenderId: "958529699742",
+  appId: "1:958529699742:web:7b6bfac387fe6f1a5ee08f"
+};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+const getCurrentUser = () => {
+  return auth.currentUser;
+}
+
+async function getTrips() {
+  const tripSchedule = collection(db, 'Trip_Schedule');
+  const tripSnapshot = await getDocs(tripSchedule);
+  const tripList = tripSnapshot.docs.map(doc => doc.data());
+  return tripList;
+}
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -102,5 +113,7 @@ export {
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,
     sendPasswordReset,
-    logout,
+  logout,
+  getTrips,
+  getCurrentUser
   };

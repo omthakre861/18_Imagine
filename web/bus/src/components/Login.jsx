@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { signInWithGoogle,logInWithEmailAndPassword,sendPasswordReset,logout } from '../../pages/firebase'
+import { signInWithGoogle,logInWithEmailAndPassword,sendPasswordReset,logout } from '../../pages/firebaseConfig'
 import { initializeApp } from "firebase/app";
 
 
