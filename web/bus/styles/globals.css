@@ -23,7 +23,7 @@ body {
   align-items: center;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-
+  z-index: 0;
 }
 
 .nav-list{
@@ -39,6 +39,11 @@ body {
   margin-bottom:10px;
 }
 
+.nav-items svg:hover{
+  color: white;
+  background-color: rgb(49, 49, 73);
+}
+
 .nav-items svg{
   width: 25px;
   height: 25px;
@@ -52,6 +57,7 @@ body {
   position: fixed;
   top:0;
   right:0;
+  z-index: -1;
   
   background-color: rgb(156, 184, 243);
   width:400px;
@@ -163,4 +169,108 @@ h2{
 
 .travelers-details-cont .right-cont h1{
   font-size: 40px;
+}
+
+.position-absolute{
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+
+}
+
+.black-background{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.884);
+}
+
+.main-cont-login{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  border-radius: 40px;
+  
+  
+  width: 330px;
+  
+  height: 370px;
+  background-color: white;
+
+  z-index:11;
+
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  padding:40px
+}
+
+.main-cont-login h1{
+  margin-bottom: 30px;
+
+}
+.main-cont-login h2{
+  margin-bottom: 20px;
+  color:rgb(41, 41, 67);
+
+}
+
+.main-cont-login input{
+  outline: none;
+  border: none;
+  border-bottom: 3px rgb(16, 16, 44) solid ; 
+  margin-bottom: 20px;
+  font-size: 20px;
+  
+}
+
+.position-absolute button{
+  outline: none;
+  border: none;
+  background-color: rgb(16, 16, 44);
+  width: 150px;
+  height: 50px;
+  color:white;
+  border-radius: 10px;
+  letter-spacing: 3px;
+  font-weight: 600;
+  text-transform: uppercase ;
+  box-shadow: 1px 1px 5px rgb(74, 72, 72);
+
+
+}
+.position-absolute h4{
+  text-align: center;
+  margin-top:-5px;
+  margin-bottom: 25px;
+  text-decoration: underline;
+}
+.position-absolute h4:hover{
+  color:blue;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color: rgb(34, 34, 76);
+  cursor: pointer;
+
+
+}
+button:active{
+  box-shadow: none;
+
+
+}
+.position-absolute .flex-row{
+  justify-content: space-between;
+  /* background-color: red; */
+  width:100%;
 }

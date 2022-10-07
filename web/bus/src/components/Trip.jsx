@@ -5,8 +5,8 @@ const Trip = () => {
 
     let namee = "Chinmay Dandekar";
     let age = "20";
-    let contact = "9673236656";
-    let email = "chinmay2001.cd@gmail.com";
+    let contact = "9673936656";
+    let email = "chinmay2201.cd@gmail.com";
     let trip = "Virar Bus Dep. to Nalasopara Bus Dep."
     let seatNo = "6";
 
