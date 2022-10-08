@@ -1,3 +1,5 @@
+import 'package:bus_booking_something/pages/payment.dart';
+import 'package:bus_booking_something/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -8,13 +10,21 @@ class PassengerDetails extends StatefulWidget {
       required this.toLocation,
       required this.boardingPoint,
       required this.departingPoint,
-      required this.totalFare})
+      required this.totalFare,
+      required this.busId,
+      required this.numberofSeat,
+      required this.seatList,
+      required this.busType})
       : super(key: key);
   String fromLocation;
   String toLocation;
   String boardingPoint;
   String departingPoint;
   String totalFare;
+  String busId;
+  int numberofSeat;
+  List<String> seatList;
+  String busType;
 
   @override
   State<PassengerDetails> createState() => _PassengerDetailsState();
@@ -26,6 +36,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
   int? age;
   String userPhoneNo = '';
+  String bookingID = "";
 
   final _formKey = GlobalKey<FormState>();
 
@@ -51,21 +62,60 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     );
   }
 
-   trysubmit() {
+  trysubmit() {
     final isvalid = _formKey.currentState!.validate();
     if (isvalid) {
       _formKey.currentState!.save();
       submitform();
-    } 
+    }
   }
+
   //  Sends data to Cloud Firestore
-  submitform() {
+  submitform() async {
     // var currentuser = FirebaseAuth.instance.currentUser;
+    String currentuseruid = "wGUYu5TV2Bblpd3llgCqB24bqpk2";
     // if (currentuser != null) {
-     
-    // Database().create('info', currentuser.uid, firstname, lastname,
-    //     genderselect, age!, userPhoneNo, careGiverPhoneNo);
-    // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => BlueState(),), (route) => false);
+
+    bookingID = await Database().createBooking(
+      'booking',
+      currentuseruid,
+      'all_booking',
+      currentuseruid,
+      fullName,
+      age!,
+      userPhoneNo,
+      genderselect,
+      false,
+      widget.boardingPoint,
+      widget.departingPoint,
+      widget.totalFare,
+      widget.numberofSeat,
+      widget.seatList,
+      widget.busId,
+    );
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Payment(
+            age: age!,
+            boardingPoint: widget.boardingPoint,
+            departingPoint: widget.departingPoint,
+            fromLocation: widget.fromLocation,
+            fullName: fullName,
+            seatNo: widget.seatList.toString(),
+            toLocation: widget.toLocation,
+            totalFare: double.parse(widget.totalFare),
+            busId: widget.busId,
+            busType: widget.busType,
+            bookingId: bookingID,
+          ),
+        ));
+    // Navigator.of(context).pushAndRemoveUntil(
+    //     MaterialPageRoute(
+    //       builder: (context) => BlueState(),
+    //     ),
+    //     (route) => false);Map
     // }
   }
 

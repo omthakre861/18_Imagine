@@ -1,5 +1,7 @@
 import 'package:bus_booking_something/pages/mainpage.dart';
 import 'package:bus_booking_something/pages/passenger_details.dart';
+import 'package:bus_booking_something/pages/payment.dart';
+import 'package:bus_booking_something/pages/successPage.dart';
 import 'package:bus_booking_something/pages/uplo.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +34,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home:
-      
+
           //  uplo()
           MainPage(),
+      // SucessPage()
+      // Payment(
+      //     boardingPoint: "adf",
+      //     departingPoint: 'asd',
+      //     fromLocation: 'asdas',
+      //     toLocation: 'asds')
     );
   }
 }

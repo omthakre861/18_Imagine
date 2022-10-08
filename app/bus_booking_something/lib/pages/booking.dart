@@ -11,12 +11,18 @@ class Booking extends StatefulWidget {
       required this.boardingPoint,
       required this.droppingPoint,
       required this.fromLocation,
-      required this.toLocation})
+      required this.toLocation,
+      required this.busId,
+      required this.busType,
+      required this.fare})
       : super(key: key);
   List<dynamic> boardingPoint;
   List<dynamic> droppingPoint;
   String fromLocation;
   String toLocation;
+  String busId;
+  int fare;
+  String busType;
 
   @override
   State<Booking> createState() => _BookingState();
@@ -37,7 +43,7 @@ class _BookingState extends State<Booking> {
   String totalFare = "";
 
   int seatcount = 0;
-  double fare = 800;
+
   double totalprice = 0;
 
   int _activeCurrentStep = 0;
@@ -107,13 +113,13 @@ class _BookingState extends State<Booking> {
                             setState(() {
                               seatavailabiltychart[index] = 2;
                               seatcount++;
-                              totalprice = seatcount * fare;
+                              totalprice = seatcount * widget.fare.toDouble();
                             });
                           } else {
                             setState(() {
                               seatavailabiltychart[index] = 0;
                               seatcount--;
-                              totalprice = seatcount * fare;
+                              totalprice = seatcount * widget.fare.toDouble();
                             });
                           }
                         }
@@ -174,16 +180,28 @@ class _BookingState extends State<Booking> {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            departingPoint = widget.droppingPoint[index];
+            departingPoint = widget.droppingPoint[index]["placeName"];
+            List<String> seatlist = [];
+            for (int i = 0; i < seatavailabiltychart.length; i++) {
+              if (seatavailabiltychart[i] == 2) {
+                seatlist.add(i.toString());
+              }
+            }
+
             Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => PassengerDetails(
-                      fromLocation: widget.fromLocation,
-                      toLocation: widget.toLocation,
-                      boardingPoint: boardingPoint,
-                      departingPoint: departingPoint,
-                      totalFare: totalFare),
+                    fromLocation: widget.fromLocation,
+                    toLocation: widget.toLocation,
+                    boardingPoint: boardingPoint,
+                    departingPoint: departingPoint,
+                    totalFare: totalprice.toString(),
+                    seatList: seatlist,
+                    busId: widget.busId,
+                    numberofSeat: seatcount,
+                    busType: widget.busType,
+                  ),
                 ));
           },
           child: Card(
@@ -192,7 +210,7 @@ class _BookingState extends State<Booking> {
                 padding: EdgeInsets.all(5.0),
                 height: 50,
                 child: Text(
-                  widget.droppingPoint[index].toString(),
+                  widget.droppingPoint[index]["placeName"].toString(),
                   style: TextStyle(fontSize: 20),
                 )),
           ),
